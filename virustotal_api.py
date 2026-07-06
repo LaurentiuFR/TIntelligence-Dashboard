@@ -13,17 +13,16 @@ urlVT = "https://www.virustotal.com/api/v3/urls" #input(str("URL:"))
 urlToCheck = input(str("URL:"))
 
 def getAnalysis(urlToAnalyse):
-    url = "https://www.virustotal.com/api/v3/urls/" 
+    url = urlToAnalyse
     headers = {"x-apikey": API_KEY,
                 "accept": "application/json"} #json is a way to store store. so it is telling it to send the data in json format.
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
-        print (1)
+        #print (1)
         print(response.json())
     else:
         print("The URL is not available!")
-getAnalysis(urlToCheck)
 
 def urlCheck(urlToCheck): #-> Analysis ID
     # calls the api to check the url
@@ -43,6 +42,7 @@ def urlCheck(urlToCheck): #-> Analysis ID
         json_data = response.json()
         urlID = json_data["data"]["links"]["self"]
         print(urlID)      
+        getAnalysis(urlID)
     else:
         print(response)
 
