@@ -27,11 +27,11 @@ def urlCheck(urlToCheck): #-> Analysis ID
     
     if response.status_code == 200:
         #call function to analyse the ID
-        print(1)
+        
         json_data = response.json()
-
-        #urlID = json_data[data][links][self]        
+        urlID = json_data["data"]["links"]["self"]
+        print(urlID)      
     else:
-        print("The URL is not available!")
+        print(response)
 
 urlCheck(urlToCheck)
