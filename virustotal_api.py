@@ -12,7 +12,6 @@ urlVT = "https://www.virustotal.com/api/v3/urls" #input(str("URL:"))
 
 urlToCheck = input(str("URL:"))
 
-#def get_Analysis(urlID):
 
 def urlCheck(urlToCheck): #-> Analysis ID
     # calls the api to check the url
@@ -30,7 +29,7 @@ def urlCheck(urlToCheck): #-> Analysis ID
         #call function to analyse the ID
         print(1)
         json_data = response.json()
-        json_data.type()
+
         #urlID = json_data[data][links][self]        
     else:
         print("The URL is not available!")
