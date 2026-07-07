@@ -14,6 +14,20 @@ urlVT = "https://www.virustotal.com/api/v3/urls" #input(str("URL:"))
 
 urlToCheck = input(str("URL:"))
 
+def responseTime(startingTime, finalTime):
+    finalTime = (finalTime - startingTime).total_seconds()
+    if finalTime < 1:
+        miliseconds = finalTime * 1000
+        print(f"It took {miliseconds:.2f} ms")
+    elif finalTime > 60:
+        minutes = finalTime / 60
+        print(f"It took {minutes:.2f} mins")
+        if finalTime > 1800:
+            print("Timeout - took too long...")
+    else:
+        print(f"It took {finalTime:.2f} seconds")
+
+
 
 def getAnalysis(urlToAnalyse):
     currenTime = datetime.now()
@@ -24,44 +38,6 @@ def getAnalysis(urlToAnalyse):
 
     if response.status_code == 200:
         print("Result: ")
-        data = response.json() # this works
-        stats = data["data"]["attributes"]["stats"]
-        maliciousCount = stats["malicious"]
-        suspectCount = stats["suspicious"]
-        undetected = stats["undetected"]
-        harmless = stats["harmless"]
-        timeout = stats["timeout"]
-        confirmedTimeout = stats["confirmed_timeout"]
-        failure = stats["failure"]
-        typeUnsupported = stats["type_unsupported"]
-
-        dateNumber = data["data"]["attributes"]["date"]
-
-        timeTaken = datetime.now() - currenTime
-        timeTakenSeconds = timeTaken.total_seconds()
-
-        if timeTakenSeconds < 1:
-            miliseconds = timeTakenSeconds * 1000
-            print(f"It took {miliseconds:.2f} ms")
-        elif timeTakenSeconds > 60:
-            minutes = timeTakenSeconds / 60
-            print(f"It took {minutes:.2f} mins")
-            if timeTakenSeconds > 1800:
-                print("Timeout - took too long...")
-        else:
-            print(f"It took {timeTakenSeconds:.2f} seconds")
-
-
-
-        if maliciousCount > 0:
-            print("The URL is malicious!")
-        elif suspectCount > 0:
-            print("The URL is suspicious!")
-        elif undetected > 0:
-            print("The URL is undetected!")
-        elif harmless > 0:
-            print("The URL is harmless!")
-
     else:
         print("The URL is not available!")
 
