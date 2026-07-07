@@ -1,5 +1,4 @@
 from datetime import datetime
-import time
 import os
 import requests
 from dotenv import load_dotenv
@@ -14,7 +13,6 @@ urlVT = "https://www.virustotal.com/api/v3/urls" #input(str("URL:"))
 
 urlToCheck = input(str("URL:"))
 currenTime = datetime.now()
-print(currenTime)
 
 def getAnalysis(urlToAnalyse):
     url = urlToAnalyse
@@ -36,10 +34,13 @@ def getAnalysis(urlToAnalyse):
         typeUnsupported = stats["type_unsupported"]
 
         dateNumber = data["data"]["attributes"]["date"]
-        #date = 
-        #time = 
+
         timeTaken = datetime.now() - currenTime
-        print(timeTaken)
+        timeTakenSeconds = timeTaken.total_seconds()
+
+        if timeTakenSeconds < 1:
+            miliseconds = timeTakenSeconds * 1000
+            print(f"It took {miliseconds:.2f} ms")
 
         if maliciousCount > 0:
             print("The URL is malicious!")
