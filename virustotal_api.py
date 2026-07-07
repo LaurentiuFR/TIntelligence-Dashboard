@@ -1,6 +1,7 @@
 from datetime import datetime
 import os
 import requests
+import time
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -12,9 +13,10 @@ print("API Key loaded securely!")
 urlVT = "https://www.virustotal.com/api/v3/urls" #input(str("URL:"))
 
 urlToCheck = input(str("URL:"))
-currenTime = datetime.now()
+
 
 def getAnalysis(urlToAnalyse):
+    currenTime = datetime.now()
     url = urlToAnalyse
     headers = {"x-apikey": API_KEY,
                 "accept": "application/json"} #json is a way to store store. so it is telling it to send the data in json format.
@@ -41,6 +43,15 @@ def getAnalysis(urlToAnalyse):
         if timeTakenSeconds < 1:
             miliseconds = timeTakenSeconds * 1000
             print(f"It took {miliseconds:.2f} ms")
+        elif timeTakenSeconds > 60:
+            minutes = timeTakenSeconds / 60
+            print(f"It took {minutes:.2f} mins")
+            if timeTakenSeconds > 1800:
+                print("Timeout - took too long...")
+        else:
+            print(f"It took {timeTakenSeconds:.2f} seconds")
+
+
 
         if maliciousCount > 0:
             print("The URL is malicious!")
@@ -57,6 +68,7 @@ def getAnalysis(urlToAnalyse):
 
 def urlCheck(urlToCheck): #-> Analysis ID
     # calls the api to check the url
+    
 
     payload = {"url": urlToCheck}
     headers = {
