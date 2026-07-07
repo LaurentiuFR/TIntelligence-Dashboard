@@ -1,3 +1,4 @@
+from datetime import datetime
 import os
 import requests
 from dotenv import load_dotenv
@@ -20,9 +21,36 @@ def getAnalysis(urlToAnalyse):
 
     if response.status_code == 200:
         #print (1)
+        data = response.json()
+        stats = data["data"]["attributes"]["stats"]
+        maliciousCount = stats["malicious"]
+        suspectCount = stats["suspicious"]
+        undetected = stats["undetected"]
+        harmless = stats["harmless"]
+        timeout = stats["timeout"]
+        confirmedTimeout = stats["confirmed-timeout"]
+        failure = stats["failure"]
+        typeUnsupported = stats["type-unsupported"]
+
+        dateNumber = data["data"]["attributes"]["date"]
+
+        date = 
+        time = 
+
+        if maliciousCount > 0:
+            print("The URL is malicious!")
+        elif suspectCount > 0:
+            print("The URL is suspicious!")
+        elif undetected > 0:
+            print("The URL is undetected!")
+        elif harmless > 0:
+            print("The URL is harmless!")
+
         print(response.json())
+
     else:
         print("The URL is not available!")
+
 
 def urlCheck(urlToCheck): #-> Analysis ID
     # calls the api to check the url
