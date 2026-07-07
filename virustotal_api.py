@@ -1,4 +1,5 @@
 from datetime import datetime
+import time
 import os
 import requests
 from dotenv import load_dotenv
@@ -12,6 +13,8 @@ print("API Key loaded securely!")
 urlVT = "https://www.virustotal.com/api/v3/urls" #input(str("URL:"))
 
 urlToCheck = input(str("URL:"))
+currenTime = datetime.now()
+print(currenTime)
 
 def getAnalysis(urlToAnalyse):
     url = urlToAnalyse
@@ -20,22 +23,23 @@ def getAnalysis(urlToAnalyse):
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
-        #print (1)
-        data = response.json()
+        print("Result: ")
+        data = response.json() # this works
         stats = data["data"]["attributes"]["stats"]
         maliciousCount = stats["malicious"]
         suspectCount = stats["suspicious"]
         undetected = stats["undetected"]
         harmless = stats["harmless"]
         timeout = stats["timeout"]
-        confirmedTimeout = stats["confirmed-timeout"]
+        confirmedTimeout = stats["confirmed_timeout"]
         failure = stats["failure"]
-        typeUnsupported = stats["type-unsupported"]
+        typeUnsupported = stats["type_unsupported"]
 
         dateNumber = data["data"]["attributes"]["date"]
-
-        date = 
-        time = 
+        #date = 
+        #time = 
+        timeTaken = datetime.now() - currenTime
+        print(timeTaken)
 
         if maliciousCount > 0:
             print("The URL is malicious!")
@@ -45,8 +49,6 @@ def getAnalysis(urlToAnalyse):
             print("The URL is undetected!")
         elif harmless > 0:
             print("The URL is harmless!")
-
-        print(response.json())
 
     else:
         print("The URL is not available!")
